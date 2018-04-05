@@ -4,36 +4,17 @@ variable "azure_region" {
   default = "West Europe"
 }
 
-variable "client_id" {
-  type = "string"
-  description = "Client ID for azure provider"
-}
-
-variable "client_secret" {
-  type = "string"
-  description = "Client Secret for azure provider"
-}
-
-variable "subscription_id" {
-  type = "string"
-  description = "Subscription ID for azure provider"
-}
-
-variable "tenant_id" {
-  type = "string"
-  description = "Tenant ID for azure provider"
-}
-
 variable "resource_group_name" {
   type = "string"
   description = "Resource Group name"
 }
 
+variable "mysql_server_name" {
+  type = "string"
+  description = "Name of your mysql server name"
+}
+
 provider "azurerm" {
-  client_id = "${var.client_id}"
-  client_secret = "${var.client_secret}"
-  subscription_id = "${var.subscription_id}"
-  tenant_id = "${var.tenant_id}"
 }
 
 resource "azurerm_resource_group" "iac_ws_tf_rg" {
@@ -147,7 +128,7 @@ resource "azurerm_network_interface" "iac_ws_tf_sample_app_vm_nic" {
 }
 
 resource "azurerm_mysql_server" "iac_ws_tf_sample_db" {
-  name                = "mysql-server-1"
+  name                = "${var.mysql_server_name}"
   location            = "${var.azure_region}"
   resource_group_name = "${azurerm_resource_group.iac_ws_tf_rg.name}"
 
